@@ -1,19 +1,27 @@
-function App() {
+import Alert from "./components/alert/alert";
+import AlertType from "./components/alert/alert.types";
+
+const App = () => {
   return (
-    <div className="">
-      <div class="mx-auto flex max-w-sm items-center gap-x-4 rounded-xl bg-white p-6 shadow-lg outline outline-black/5 dark:bg-slate-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10">
-        <img class="size-12 shrink-0" src="/img/logo.svg" alt="ChitChat Logo" />
-        <div>
-          <div class="text-xl font-medium text-black dark:text-white">
-            ChitChat
-          </div>
-          <p class="text-gray-500 dark:text-gray-400">
-            You have a new message!
-          </p>
-        </div>
-      </div>
+    <div className="bg-[url(../public/hd-map.png)] bg-center bg-no-repeat bg-cover h-screen">
+      <Alert
+        type={AlertType.ERROR}
+        content="B1900: Air Bag Circuit Short to Battery"
+      />
+      <Alert
+        type={AlertType.INFO}
+        content="B1000:Instrument Panel Warning Lamp Circuit"
+      />
+      <Alert
+        type={AlertType.WARNING}
+        content="P0115:Engine Coolant Temperature"
+      />
+      <Alert
+        type={AlertType.SUCCESS}
+        content="Your next maintenance will be in 15 days!"
+      />
     </div>
   );
-}
+};
 
 export default App;
