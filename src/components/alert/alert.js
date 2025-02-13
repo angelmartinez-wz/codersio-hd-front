@@ -21,7 +21,7 @@ const Alert = ({ type = AlertType.INFO, content }) => {
       <div
         className={cn(
           alertTypeClassName[type].container,
-          "flex rounded-xl p-6 w-[24rem] border-b-8 border-b-trueGray-700/70"
+          "flex rounded-xl p-6 w-[24rem] shadow-xl shadow-gray-700/50"
         )}
       >
         <p className="text-stone-50 truncate">{content}</p>

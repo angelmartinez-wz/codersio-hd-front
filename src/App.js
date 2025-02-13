@@ -1,10 +1,11 @@
 import Alert from "./components/alert/alert";
 import AlertType from "./components/alert/alert.types";
+import AppointmentCard from "./components/appointmentCard/appointmentCard";
 
 const App = () => {
   return (
     <div className="bg-[url(../public/hd-map.png)] bg-center bg-no-repeat bg-cover h-screen">
-      <Alert
+      {/* <Alert
         type={AlertType.ERROR}
         content="B1900: Air Bag Circuit Short to Battery"
       />
@@ -15,11 +16,12 @@ const App = () => {
       <Alert
         type={AlertType.WARNING}
         content="P0115:Engine Coolant Temperature"
-      />
+      /> */}
       <Alert
         type={AlertType.SUCCESS}
         content="Your next maintenance will be in 15 days!"
       />
+      <AppointmentCard />
     </div>
   );
 };
