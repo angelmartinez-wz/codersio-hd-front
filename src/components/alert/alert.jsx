@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import AlertType from "./alert.types";
 import cn from "classnames";
 
@@ -15,9 +16,22 @@ const alertTypeClassName = {
     container: "bg-error",
   },
 };
+
 const Alert = ({ type = AlertType.INFO, content }) => {
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!isVisible) return null;
+
   return (
-    <div className="flex pt-10 pr-6 justify-end">
+    <div className="flex pt-10 pr-6 justify-end z-index-50" role="alert">
       <div
         className={cn(
           alertTypeClassName[type].container,

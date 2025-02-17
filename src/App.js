@@ -3,6 +3,30 @@ import Alert from "./components/alert/alert";
 import AlertType from "./components/alert/alert.types";
 import AppointmentCard from "./components/appointmentCard/appointmentCard";
 import { apolloClient } from "./graphql";
+import { useAlerts } from "./hooks/useAlerts";
+
+const MyComponent = () => {
+  const alertsToShow = [];
+  const severity = {
+    High: AlertType.ERROR,
+    Medium: AlertType.WARNING,
+    Low: AlertType.INFO,
+  };
+  const { alerts } = useAlerts();
+  console.log("LALAL", alerts);
+  alerts.map((alert, index) => {
+    console.log("alert", alert);
+    return alertsToShow.push(
+      <Alert
+        key={index}
+        type={severity[alert.severity]}
+        content={`${alert.alertCode} - ${alert.alertFault}`}
+      />
+    );
+  });
+
+  return <>{alertsToShow}</>;
+};
 
 const App = () => {
   return (
@@ -20,10 +44,7 @@ const App = () => {
         type={AlertType.WARNING}
         content="P0115:Engine Coolant Temperature"
       /> */}
-        <Alert
-          type={AlertType.SUCCESS}
-          content="Your next maintenance will be in 15 days!"
-        />
+        <MyComponent />
         <AppointmentCard />
       </div>
     </ApolloProvider>
