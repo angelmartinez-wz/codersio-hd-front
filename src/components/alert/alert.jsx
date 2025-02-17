@@ -17,13 +17,13 @@ const alertTypeClassName = {
   },
 };
 
-const Alert = ({ type = AlertType.INFO, content }) => {
+const Alert = ({ type = AlertType.INFO, content, onClick }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false);
-    }, 2000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -31,16 +31,18 @@ const Alert = ({ type = AlertType.INFO, content }) => {
   if (!isVisible) return null;
 
   return (
-    <div className="flex pt-10 pr-6 justify-end z-index-50" role="alert">
-      <div
-        className={cn(
-          alertTypeClassName[type].container,
-          "flex rounded-xl p-6 w-[24rem] shadow-xl shadow-gray-700/50"
-        )}
-      >
-        <p className="text-stone-50 truncate">{content}</p>
+    <button onClick={onClick} className="flex">
+      <div className="flex pt-10 pr-6 justify-end" role="alert">
+        <div
+          className={cn(
+            alertTypeClassName[type].container,
+            "flex rounded-xl p-6 w-[24rem] shadow-xl shadow-gray-700/50"
+          )}
+        >
+          <p className="text-stone-50 truncate">{content}</p>
+        </div>
       </div>
-    </div>
+    </button>
   );
 };
 
