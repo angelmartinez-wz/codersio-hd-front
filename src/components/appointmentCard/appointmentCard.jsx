@@ -1,7 +1,13 @@
+import { useContext } from "react";
 import Close from "../../img/close";
 import TabComponent from "../tabComponent/tabComponent";
+import { TabsContext } from "../../contexts/tabContext";
+
+export const primaryButtonStyle = "bg-primary_1 hover:bg-primary_2 text-white font-bold py-2 px-4 rounded-full w-40";
 
 const AppointmentCard = () => {
+  const [ activeTab, setActiveTab ] = useContext(TabsContext);
+
   return (
     <div className="flex justify-center">
       <div className="w-[48.5rem] rounded overflow-hidden shadow-lg bg-slate-100">
@@ -15,10 +21,16 @@ const AppointmentCard = () => {
           <TabComponent />
         </div>
 
-        <div className="flex px-6 py-6 gap-x-2">
-          <button className="bg-primary_1 hover:bg-primary_2 text-white font-bold py-2 px-4 rounded-full w-40">
-            Next
-          </button>
+         <div className="flex px-6 py-6 gap-x-2">
+          {activeTab === 1 ? (
+            <button className={primaryButtonStyle} onClick={() => setActiveTab(0)}>
+              Save
+            </button>
+          ) : (
+            <button className={primaryButtonStyle} onClick={() => setActiveTab(1)}>
+              Next
+            </button>
+          )}
           <button className="bg-transparent hover:bg-slate-200 text-primary_1 font-bold py-2 px-4 rounded-full border-2 border-primary_1 w-40">
             Cancel
           </button>

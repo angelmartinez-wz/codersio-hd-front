@@ -51,7 +51,7 @@ const InformationAppointment = () => {
         </div>
         <div className="text-lg font-medium text-gray-800">
           <InformationCard title="Phone" />
-          <PhoneInput value="(123)456 1234" />
+          <PhoneInput />
         </div>
       </div>
     </div>
