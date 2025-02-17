@@ -5,14 +5,14 @@ import { TabsContext } from "../../contexts/tabContext";
 
 export const primaryButtonStyle = "bg-primary_1 hover:bg-primary_2 text-white font-bold py-2 px-4 rounded-full w-40";
 
-const AppointmentCard = () => {
+const AppointmentCard = ({ handleClose }) => {
   const [ activeTab, setActiveTab ] = useContext(TabsContext);
 
   return (
     <div className="flex justify-center">
       <div className="w-[48.5rem] rounded overflow-hidden shadow-lg bg-slate-100">
         <div className="flex py-5 px-6 items-center justify-between">
-          <h1 className="font-normal text-2xl">Create Maintenance Appointment</h1>
+          <h1 className="font-normal text-2xl">Maintenance Appointment</h1>
           <button className="hover:bg-gray-200 rounded">
             <Close />
           </button>
@@ -31,7 +31,7 @@ const AppointmentCard = () => {
               Next
             </button>
           )}
-          <button className="bg-transparent hover:bg-slate-200 text-primary_1 font-bold py-2 px-4 rounded-full border-2 border-primary_1 w-40">
+          <button onClick={() => {handleClose(); setActiveTab(0)}} className="bg-transparent hover:bg-slate-200 text-primary_1 font-bold py-2 px-4 rounded-full border-2 border-primary_1 w-40">
             Cancel
           </button>
         </div>

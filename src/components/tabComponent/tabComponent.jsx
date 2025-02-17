@@ -14,7 +14,6 @@ const TabComponent = () => {
       content: (
         <DealershipCard />
       ),
-      disabled: false
     },
     {
       id: 1,
@@ -22,7 +21,6 @@ const TabComponent = () => {
       content: (
         <InformationAppointment />
       ),
-      disabled: activeTab !== 1
     },
   ];
 
@@ -35,8 +33,7 @@ const TabComponent = () => {
             onClick={() => !tab.disabled && setActiveTab(tab.id)}
             className={cn('flex-1 py-2 text-center font-medium transition-all',
               `${
-                tab.disabled ? "text-gray-400 cursor-not-allowed"
-                : activeTab === tab.id
+                activeTab === tab.id
                   ? "border-b-2 border-primary_1 text-primary_1"
                   : "text-gray-800 hover:text-primary_2"
               }`)}

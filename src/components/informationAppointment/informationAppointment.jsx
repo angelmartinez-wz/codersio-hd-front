@@ -4,12 +4,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./styles.css";
 import CustomTimePicker from "./timePicker";
 import PhoneInput from "./phoneInput";
-import CalendarIcon from "../../img/calendar";
 
 const CalendarComponent = () => {
   const [startDate, setStartDate] = useState(new Date());
   return (
-    <DatePicker showIcon selected={startDate} onChange={(date) => setStartDate(date)} icon={CalendarIcon}/>
+    <DatePicker showIcon selected={startDate} onChange={(date) => setStartDate(date)}/>
   );
 };
 
