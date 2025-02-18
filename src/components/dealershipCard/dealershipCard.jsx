@@ -30,7 +30,7 @@ const DealershipCard = () =>{
             />
             <>
               <div className="flex items-center justify-center bg-primary_3/50 text-min font-medium select-none relative h-8 w-8 leading-4 text-[13px] rounded-full">{dealership?.name?.charAt(0)}</div>
-              <div>
+              <div className="w-[500px]">
                 <h2 className="font-medium mb-1">{dealership.name}</h2>
                 <p className="font-small">{dealership.direction}</p>
                 <p className="font-normal">{`${dealership.phone}, (${dealership.distance})`}</p>
