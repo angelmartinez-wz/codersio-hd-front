@@ -13,7 +13,7 @@ const AppointmentCard = ({ handleClose }) => {
       <div className="w-[48.5rem] rounded overflow-hidden shadow-lg bg-slate-100">
         <div className="flex py-5 px-6 items-center justify-between">
           <h1 className="font-normal text-2xl">Maintenance Appointment</h1>
-          <button className="hover:bg-gray-200 rounded">
+          <button className="hover:bg-gray-200 rounded" onClick={() => {handleClose(); setActiveTab(0)}}>
             <Close />
           </button>
         </div>

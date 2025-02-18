@@ -20,7 +20,7 @@ const Home = () => {
         <AppointmentCard handleClose={handleClose}/>
        )}
 
-      <button onClick={() => setShowAppointment(true)} className="fixed bottom-4 right-4 transition-all duration-300 bg-info_blue rounded-xl w-10 h-10 p-2 hover:bg-info_blue/75">
+      <button onClick={() => setShowAppointment(true)} className="fixed bottom-4 right-4 transition-all duration-300 bg-primary_1 rounded-xl w-16 h-16 p-4  hover:bg-primary_1/75">
         <CalendarIcon />
       </button>
     </div>
