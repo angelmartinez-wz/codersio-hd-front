@@ -22,6 +22,7 @@ export async function login(email, password) {
     body: JSON.stringify({ email, password }),
   });
   if (response.ok) {
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
     const { token } = await response.json();
     localStorage.setItem(ACCESS_TOKEN_KEY, token);
     return email;

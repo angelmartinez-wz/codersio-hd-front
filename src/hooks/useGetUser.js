@@ -7,6 +7,8 @@ export const useGetUser = () => {
 };
 
 export const useGetUserByEmail = (userId) => {
-  const { data, loading, error } = useQuery(getUserByEmailQuery);
+  const { data, loading, error } = useQuery(getUserByEmailQuery, {
+    fetchPolicy: "network-only",
+  });
   return { user: data?.userByEmail, loading, error: Boolean(error) };
 };

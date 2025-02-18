@@ -1,4 +1,4 @@
-import { HEADERS, URI, WS_URI } from "../constants";
+import { URI, WS_URI } from "../constants";
 import {
   ApolloClient,
   ApolloLink,
@@ -14,7 +14,12 @@ import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
 import { getAccessToken } from "../lib/auth";
 
 const authLink = new ApolloLink((operation, forward) => {
-  operation.setContext(HEADERS);
+  operation.setContext({
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      "content-type": "application/json",
+    },
+  });
   return forward(operation);
 });
 

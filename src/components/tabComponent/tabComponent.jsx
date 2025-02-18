@@ -2,7 +2,7 @@ import { useState } from "react";
 import DealershipCard from "../dealershipCard/dealershipCard";
 import InformationAppointment from "../informationAppointment/informationAppointment";
 
-const TabComponent = () => {
+const TabComponent = ({ user }) => {
   const [activeTab, setActiveTab] = useState(0);
 
   const tabs = [
@@ -17,7 +17,7 @@ const TabComponent = () => {
       id: 1,
       label: "Information",
       content: (
-        <InformationAppointment />
+        <InformationAppointment user={ user } />
       ),
     },
   ];

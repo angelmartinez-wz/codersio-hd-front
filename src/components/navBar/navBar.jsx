@@ -9,8 +9,7 @@ import { Avatar, Button } from '@mui/material';
 import { deepPurple } from '@mui/material/colors';
 
 export default function NavBar({ user, onLogout, onLogin }) {
-  console.log('user', user)
-
+  console.log('nav', user);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: '#000000', marginBottom: '50px' }}>
@@ -33,7 +32,7 @@ export default function NavBar({ user, onLogout, onLogin }) {
           {
             user ? (
               <>
-                <Avatar sx={{ bgcolor: deepPurple[500] }}>{ user?.name?.charAt(0) }</Avatar>
+                <Avatar sx={{ bgcolor: deepPurple[500] }}>{ user?.name?.charAt(0) || user?.charAt(0).toUpperCase() }</Avatar>
                 <Button onClick={onLogout} sx={{ color: '#ffffff' }}>
                   Logout
                 </Button>

@@ -5,14 +5,12 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { login } from '../../lib/auth';
-import { useGetUserByEmail } from '../../hooks/useGetUser';
+import { login, logout } from '../../lib/auth';
 import { Fragment, useState } from 'react';
 
 export default function LoginDialog({ onLogin }) {
   const [open, setOpen] = useState(false);
-  const { user } = useGetUserByEmail();
-
+  
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -40,7 +38,8 @@ export default function LoginDialog({ onLogin }) {
               const password = formJson.password;
               const userLogged = await login(email, password);
               if (userLogged) {
-                onLogin(user);
+                console.log('userLogged', userLogged);
+                onLogin(userLogged);
               }
               handleClose();
             },

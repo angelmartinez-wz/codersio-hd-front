@@ -23,6 +23,14 @@ export const getUserQuery = gql`
         time
         status
       }
+      dealership {
+        id
+        name
+        direction
+        phone
+        image
+        distance
+      }
     }
   }
 `;
@@ -42,6 +50,7 @@ export const getUserByEmailQuery = gql`
         color
         plate
         registration
+        image
       }
       appointments {
         id
@@ -49,6 +58,14 @@ export const getUserByEmailQuery = gql`
         date
         time
         status
+      }
+      dealership {
+        id
+        name
+        direction
+        phone
+        image
+        distance
       }
     }
   }

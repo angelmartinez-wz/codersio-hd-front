@@ -1,7 +1,10 @@
+import { useGetUserByEmail } from "../../hooks/useGetUser";
 import Close from "../../img/close";
 import TabComponent from "../tabComponent/tabComponent";
 
 const AppointmentCard = () => {
+  const { user: userInfo } = useGetUserByEmail();
+  console.log('userInf', userInfo)
   return (
     <div className="flex justify-center">
       <div className="w-[48.5rem] rounded overflow-hidden shadow-lg bg-slate-100">
@@ -12,7 +15,7 @@ const AppointmentCard = () => {
           </button>
         </div>
         <div className="border-b-2 border-gray-300 w-full h-[22rem]">
-          <TabComponent />
+          <TabComponent user={userInfo} />
         </div>
 
         <div className="flex px-6 py-6 gap-x-2">
