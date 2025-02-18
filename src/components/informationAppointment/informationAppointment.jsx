@@ -1,14 +1,59 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./styles.css";
 import CustomTimePicker from "./timePicker";
 import PhoneInput from "./phoneInput";
 
+const getRandomDisabledDate = (start)=> {
+  const count = 9
+  let dates = new Set();
+  dates.add(start.toDateString());
+
+  while (dates.size < count) {
+    let randomOffset = Math.floor(Math.random() * 30);
+    let randomDate = new Date(start);
+    randomDate.setDate(start.getDate() + randomOffset);
+    dates.add(randomDate.toDateString());
+  }
+  
+  return Array.from(dates).map(date => new Date(date));
+}
+
 const CalendarComponent = () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const today = new Date();
+
+  const [disabledDates, setDisabledDate] = useState([]);
+  const [startDate, setStartDate] = useState(null)
+  
+  useEffect(()=> {
+    const disabled = getRandomDisabledDate(today)
+    setDisabledDate(disabled);
+    
+    const getFirstAvailable = () => {
+      let date =new Date(today);
+      while (date < today || disabled.some(d => d.toDateString() === date.toDateString()) || date.getDay() === 0) {
+        date.setDate(date.getDate() + 1);
+      }
+      return date
+    } 
+    setStartDate(getFirstAvailable());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const isDisabled = (date) => {
+    return date < today || disabledDates.some(d => d.toDateString() === date.toDateString()) || date.getDay() === 0;
+  }
+
   return (
-    <DatePicker showIcon selected={startDate} onChange={(date) => setStartDate(date)}/>
+    <DatePicker
+      showIcon
+      selected={startDate}
+      onChange={(date) => setStartDate(date)}
+      filterDates={(date) => !isDisabled(date)}
+      excludeDates={disabledDates}
+      minDate={today}
+    />
   );
 };
 
@@ -39,12 +84,12 @@ const InformationAppointment = () => {
           <InformationCard title="Membership" description="123456-789" />
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-4 pt-6 items-center">
+      <div className="grid grid-cols-3 gap-4 pt-6">
         <div>
           <InformationCard title="Date" />
           <CalendarComponent />
         </div>
-        <div className="w-[9rem]">
+        <div className="w-[10rem]">
           <InformationCard title="Time" />
           <CustomTimePicker />
         </div>

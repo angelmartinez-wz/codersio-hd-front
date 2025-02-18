@@ -43,7 +43,7 @@ const TabComponent = () => {
         ))}
       </div>
 
-      <div className="p-4 max-h-[16rem] overflow-y-auto">{tabs[activeTab].content}</div>
+      <div className="p-4 max-h-[25rem] overflow-y-auto">{tabs[activeTab].content}</div>
     </div>
   );
 };

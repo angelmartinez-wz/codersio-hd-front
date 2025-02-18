@@ -9,7 +9,7 @@ const AppointmentCard = ({ handleClose }) => {
   const [ activeTab, setActiveTab ] = useContext(TabsContext);
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center pt-9">
       <div className="w-[48.5rem] rounded overflow-hidden shadow-lg bg-slate-100">
         <div className="flex py-5 px-6 items-center justify-between">
           <h1 className="font-normal text-2xl">Maintenance Appointment</h1>
@@ -17,7 +17,7 @@ const AppointmentCard = ({ handleClose }) => {
             <Close />
           </button>
         </div>
-        <div className="border-b-2 border-gray-300 w-full h-[22rem]">
+        <div className="border-b-2 border-gray-300 w-full h-[25rem]">
           <TabComponent />
         </div>
 

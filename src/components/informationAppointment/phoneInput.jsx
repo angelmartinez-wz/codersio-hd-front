@@ -2,6 +2,7 @@ import { useState } from "react";
 
 const PhoneInput = ({ value }) => {
   const [phone, setPhone] = useState(value || "");
+  const [error, setError] = useState(false);
 
   const formatPhoneNumber = (input) => {
   let cleaned = input.replace(/\D/g, "");
@@ -20,9 +21,19 @@ const PhoneInput = ({ value }) => {
     return formatted;
   };
 
+  const validatePhoneNumber = (input) => {
+    const cleaned = String(input).replace(/\D/g, "");
+    return cleaned.length === 10;
+  }
   const handleChange = (e) => {
     const formatted = formatPhoneNumber(e.target.value);
     setPhone(formatted);
+
+    if(validatePhoneNumber(formatted)){
+      setError("")
+    } else{
+      setError("Please add a correct number");
+    }
   };
 
   return (
@@ -34,6 +45,9 @@ const PhoneInput = ({ value }) => {
         placeholder="(123) 456-7890"
         className="w-full bg-transparent focus:ring-2 focus:ring-primary_1 focus:border-primary_1 outline-none"
       />
+      {error && (
+        <p className="text-red-500 text-sm mt-2">{error}</p>
+      )}
     </div>
   );
 }
