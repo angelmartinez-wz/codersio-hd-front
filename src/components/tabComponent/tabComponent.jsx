@@ -3,8 +3,11 @@ import DealershipCard from "../dealershipCard/dealershipCard";
 import InformationAppointment from "../informationAppointment/informationAppointment";
 import { TabsContext } from "../../contexts/tabContext";
 import cn from "classnames";
+import { useGetUserByEmail } from "../../hooks/useGetUser";
 
 const TabComponent = () => {
+  const { user } = useGetUserByEmail();
+  console.log("User:", user);
   const [activeTab, setActiveTab] = useContext(TabsContext);
 
   const tabs = [
@@ -12,14 +15,14 @@ const TabComponent = () => {
       id: 0,
       label: "Dealership",
       content: (
-        <DealershipCard />
+        <DealershipCard user={user} />
       ),
     },
     {
       id: 1,
       label: "Information",
       content: (
-        <InformationAppointment />
+        <InformationAppointment user={user} />
       ),
     },
   ];
