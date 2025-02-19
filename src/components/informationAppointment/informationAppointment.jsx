@@ -23,11 +23,9 @@ const getRandomDisabledDate = (start) => {
 
 const CalendarComponent = () => {
   const [selectedDealership] = useContext(SelectedRadio);
-
-  const today = new Date();
-
   const [disabledDates, setDisabledDate] = useState([]);
   const [startDate, setStartDate] = useState(null);
+  const today = new Date();
 
   useEffect(() => {
     const disabled = getRandomDisabledDate(today);
