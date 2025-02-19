@@ -42,7 +42,9 @@ const InformationAppointment = () => {
   return (
     <div className="px-4">
       <InformationCard title="Diagnosis" description={user?.appointments?.[0]?.diagnosis} />
-      <InformationCard title="Error" content={renderErrors(user?.appointments?.[0]?.errors)} className="mt-1"/>
+      <div className="pt-4">
+        <InformationCard title="Error(s)" content={renderErrors(user?.appointments?.[0]?.errors)} />
+      </div>
       <div className="pt-5 grid grid-cols-4 gap-4">
         <div>
           <InformationCard title="Motorcycle" image={user?.motorcycle?.image} />
