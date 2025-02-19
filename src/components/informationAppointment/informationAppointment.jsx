@@ -91,7 +91,7 @@ const renderErrors = (errors) => {
 
 const InformationAppointment = () => {
   const { user } = useGetUserByEmail();
-  console.log("User:", user);
+  console.log("User:", user?.phone);
 
   return (
     <div className="px-4">
@@ -123,19 +123,17 @@ const InformationAppointment = () => {
         </div>
       </div>
       <div className="grid grid-cols-3 gap-4 pt-6">
-        <div className="grid grid-cols-4 gap-4 pt-6 items-center">
-          <div>
-            <InformationCard title="Date" />
-            <CalendarComponent />
-          </div>
-          <div className="w-[10rem]">
-            <InformationCard title="Time" />
-            <CustomTimePicker />
-          </div>
-          <div className="text-lg font-medium text-gray-800">
-            <InformationCard title="Phone" />
-            <PhoneInput value={user?.phone} />
-          </div>
+        <div>
+          <InformationCard title="Date" />
+          <CalendarComponent />
+        </div>
+        <div className="w-[10rem]">
+          <InformationCard title="Time" />
+          <CustomTimePicker />
+        </div>
+        <div className="text-lg font-medium text-gray-800">
+          <InformationCard title="Phone" />
+          <PhoneInput value={user?.phone} />
         </div>
       </div>
     </div>
