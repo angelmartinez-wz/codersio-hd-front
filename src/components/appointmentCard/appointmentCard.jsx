@@ -4,7 +4,6 @@ import TabComponent from "../tabComponent/tabComponent";
 
 const AppointmentCard = () => {
   const { user: userInfo } = useGetUserByEmail();
-  console.log('userInf', userInfo)
   return (
     <div className="flex justify-center">
       <div className="w-[48.5rem] rounded overflow-hidden shadow-lg bg-slate-100">

@@ -9,7 +9,6 @@ import { Avatar, Button } from '@mui/material';
 import { deepPurple } from '@mui/material/colors';
 
 export default function NavBar({ user, onLogout, onLogin }) {
-  console.log('nav', user);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: '#000000', marginBottom: '50px' }}>

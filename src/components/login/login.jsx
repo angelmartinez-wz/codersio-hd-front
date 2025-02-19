@@ -38,7 +38,6 @@ export default function LoginDialog({ onLogin }) {
               const password = formJson.password;
               const userLogged = await login(email, password);
               if (userLogged) {
-                console.log('userLogged', userLogged);
                 onLogin(userLogged);
               }
               handleClose();
