@@ -1,6 +1,6 @@
 import Alert from "../alert/alert";
 import AlertType from "../alert/alert.types";
-import { useAlerts } from "../../hooks/useAlerts";
+import { useErrors } from "../../hooks/useErrors";
 
 const Notification = () => {
   const severity = {
@@ -8,18 +8,18 @@ const Notification = () => {
     Medium: AlertType.WARNING,
     Low: AlertType.INFO,
   };
-  const { alerts } = useAlerts();
+  const { errors } = useErrors();
   const handleNotificationClick = (item) => {
     console.log('Notification', item);
   }
   return (
     <div className="fixed top-4 right-4 space-y-4 z-50">
-      {alerts.map((alert, index) => (
+      {errors.map((error, index) => (
         <Alert
           key={index}
-          type={severity[alert.severity]}
-          content={`${alert.alertCode} - ${alert.alertFault}`}
-          onClick={() => handleNotificationClick(alert)}
+          type={severity[error.severity]}
+          content={`${error.code} - ${error.fault}`}
+          onClick={() => handleNotificationClick(error)}
         />
       ))}
     </div>
