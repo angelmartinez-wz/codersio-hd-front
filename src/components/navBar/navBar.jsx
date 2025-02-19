@@ -7,8 +7,16 @@ import IconButton from "@mui/material/IconButton";
 import LoginDialog from "../login/login";
 import { Avatar, Button } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
+import { TabsContext, UserContext } from "../../contexts/contexts";
 
-export default function NavBar({ user, onLogout, onLogin }) {
+export default function NavBar() {
+  const [user, setUser] = React.useContext(UserContext);
+  const [, setActiveTab] = React.useContext(TabsContext);
+  const handleLogout = () => {
+    setUser(null);
+    setActiveTab(0);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: "#000000" }}>
@@ -38,12 +46,12 @@ export default function NavBar({ user, onLogout, onLogin }) {
               <Avatar sx={{ bgcolor: deepPurple[500] }}>
                 {user?.name?.charAt(0) || user?.charAt(0).toUpperCase()}
               </Avatar>
-              <Button onClick={onLogout} sx={{ color: "#ffffff" }}>
+              <Button onClick={handleLogout} sx={{ color: "#ffffff" }}>
                 Logout
               </Button>
             </>
           ) : (
-            <LoginDialog onLogin={onLogin} />
+            <LoginDialog onLogin={setUser} />
           )}
         </Toolbar>
       </AppBar>

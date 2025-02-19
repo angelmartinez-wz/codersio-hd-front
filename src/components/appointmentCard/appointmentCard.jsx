@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import Close from "../../img/close";
 import TabComponent from "../tabComponent/tabComponent";
-import { TabsContext } from "../../contexts/tabContext";
+import { TabsContext } from "../../contexts/contexts";
 
 export const primaryButtonStyle =
   "bg-primary_1 hover:bg-primary_2 text-white font-bold py-2 px-4 rounded-full w-40";
@@ -24,7 +24,7 @@ const AppointmentCard = ({ handleClose }) => {
             <Close />
           </button>
         </div>
-        <div className="border-b-2 border-gray-300 w-full h-[25rem]">
+        <div className="border-b-2 border-gray-300 w-full min-h-[25rem] max-h-[40rem]">
           <TabComponent />
         </div>
 

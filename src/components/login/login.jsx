@@ -5,7 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { login, logout } from '../../lib/auth';
+import { login } from '../../lib/auth';
 import { Fragment, useState } from 'react';
 
 export default function LoginDialog({ onLogin }) {

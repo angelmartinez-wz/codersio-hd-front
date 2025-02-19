@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./styles.css";
 import CustomTimePicker from "./timePicker";
 import PhoneInput from "./phoneInput";
-import { useGetUserByEmail } from "../../hooks/useGetUser";
+import { SelectedRadio } from "../../contexts/contexts";
 
 const getRandomDisabledDate = (start) => {
   const count = 9;
@@ -22,6 +22,8 @@ const getRandomDisabledDate = (start) => {
 };
 
 const CalendarComponent = () => {
+  const [selectedDealership] = useContext(SelectedRadio);
+
   const today = new Date();
 
   const [disabledDates, setDisabledDate] = useState([]);
@@ -43,8 +45,7 @@ const CalendarComponent = () => {
       return date;
     };
     setStartDate(getFirstAvailable());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [selectedDealership]);
 
   const isDisabled = (date) => {
     return (
@@ -79,32 +80,59 @@ const InformationCard = ({ title, description, image, content }) => {
   );
 };
 
+const filterErrors = (errors, severity) =>
+  errors?.filter((error) => error.severity === severity);
+
 const renderErrors = (errors) => {
-  if (!errors) return null;
   return errors.map((error) => (
     <p className="text-gray-600 font-normal">
-      <strong>{`${error.code} (${error.severity}):`}</strong>
+      <strong>{`${error.code}: `}</strong>
       {error.fault}
     </p>
   ));
 };
 
-const InformationAppointment = () => {
-  const { user } = useGetUserByEmail();
-  console.log("User:", user?.phone);
+const InformationAppointment = ({ user }) => {
+  const errors = user?.appointments?.[0]?.errors;
+  const hasErrors = errors?.length;
+  const lowErrors = filterErrors(errors, "Low");
+  const mediumErrors = filterErrors(errors, "Medium");
+  const highErrors = filterErrors(errors, "High");
 
   return (
     <div className="px-4">
       <InformationCard
-        title="Diagnosis"
-        description={user?.appointments?.[0]?.diagnosis}
+        title={hasErrors ? "Diagnosis" : "General Information"}
+        description={
+          hasErrors
+            ? user?.appointments?.[0]?.diagnosis
+            : "Your motorcycle is working properly."
+        }
       />
-      <div className="pt-4">
-        <InformationCard
-          title="Error(s)"
-          content={renderErrors(user?.appointments?.[0]?.errors)}
-        />
-      </div>
+      {lowErrors?.length ? (
+        <div className="pt-4">
+          <InformationCard
+            title="Low Error(s)"
+            content={renderErrors(lowErrors)}
+          />
+        </div>
+      ) : null}
+      {mediumErrors?.length ? (
+        <div className="pt-4">
+          <InformationCard
+            title="Medium Error(s)"
+            content={renderErrors(mediumErrors)}
+          />
+        </div>
+      ) : null}
+      {highErrors?.length ? (
+        <div className="pt-4">
+          <InformationCard
+            title="High Error(s)"
+            content={renderErrors(highErrors)}
+          />
+        </div>
+      ) : null}
       <div className="pt-5 grid grid-cols-4 gap-4">
         <div>
           <InformationCard title="Motorcycle" image={user?.motorcycle?.image} />
