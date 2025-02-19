@@ -1,13 +1,14 @@
-import { ApolloProvider } from "@apollo/client";
 import { useState } from "react";
-
+import { ApolloProvider } from "@apollo/client";
 import { apolloClient } from "./graphql";
-import Notification from "./components/notification/notification";
-import AppointmentCard from "./components/appointmentCard/appointmentCard";
+import TabsProvider from "./contexts/tabContext";
+import Home from "./pages/home";
 import NavBar from "./components/navBar/navBar";
 import { logout } from "./lib/auth";
 
 const App = () => {
+  const [activeTab, setActiveTab] = useState(0);
+
   const [user, setUser] = useState();
 
   const handleLogout = () => {
@@ -17,15 +18,10 @@ const App = () => {
 
   return (
     <ApolloProvider client={apolloClient}>
-      <div className="bg-[url(../public/hd-map.png)] bg-center bg-no-repeat bg-cover h-screen">
+      <TabsProvider activeTab={activeTab} setActiveTab={setActiveTab}>
         <NavBar user={user} onLogout={handleLogout} onLogin={setUser} />
-        {user && (
-          <>
-            <Notification />
-            <AppointmentCard />
-          </>
-        )}
-      </div>
+        {user && <Home />}
+      </TabsProvider>
     </ApolloProvider>
   );
 };
