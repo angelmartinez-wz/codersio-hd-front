@@ -1,4 +1,4 @@
-import { HEADERS, URI } from "../constants";
+import { URI, WS_URI } from "../constants";
 import {
   ApolloClient,
   ApolloLink,
@@ -11,9 +11,15 @@ import { Kind, OperationTypeNode } from "graphql";
 import { createClient as createWsClient } from "graphql-ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
+import { getAccessToken } from "../lib/auth";
 
 const authLink = new ApolloLink((operation, forward) => {
-  operation.setContext(HEADERS);
+  operation.setContext({
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      "content-type": "application/json",
+    },
+  });
   return forward(operation);
 });
 
@@ -21,10 +27,10 @@ const httpLink = concat(authLink, createHttpLink({ uri: URI }));
 
 const wsLink = new GraphQLWsLink(
   createWsClient({
-    url: "ws://localhost:9000/graphql",
+    url: WS_URI,
     reconnect: true,
     connectionParams: () => ({
-      accessToken: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBY01KcEw3YjQxM1oiLCJlbWFpbCI6ImFuZ2VsQGhkLmNvbSIsImlhdCI6MTczOTgxNTQ0M30.z0HZDhwDf8dq_vvlE5xk6hwONEsaiQf-eKdyyuNmHH0`,
+      accessToken: getAccessToken(),
     }),
     on: {
       connected: () => console.log("WebSocket connected"),
