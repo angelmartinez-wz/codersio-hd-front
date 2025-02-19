@@ -22,6 +22,12 @@ export const getUserQuery = gql`
         date
         time
         status
+        errors {
+          id
+          code
+          fault
+          severity
+        }
       }
       dealership {
         id
@@ -58,6 +64,12 @@ export const getUserByEmailQuery = gql`
         date
         time
         status
+        errors {
+          id
+          code
+          fault
+          severity
+        }
       }
       dealership {
         id

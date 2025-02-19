@@ -29,7 +29,7 @@ const InformationCard = ({title, description, image }) => {
 const InformationAppointment = ({ user }) => {
   return (
     <div className="px-4">
-      <InformationCard title="Diagnosis" description="Supporting line text lorem ipsum dolor sit amet, consectetur." />
+      <InformationCard title="Diagnosis" description={user?.appointments?.[0]?.diagnosis} />
       <div className="pt-5 grid grid-cols-4 gap-4">
         <div>
           <InformationCard title="Motorcycle" image={user?.motorcycle?.image} />
