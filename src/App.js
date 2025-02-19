@@ -8,7 +8,6 @@ import { logout } from "./lib/auth";
 
 const App = () => {
   const [activeTab, setActiveTab] = useState(0);
-
   const [user, setUser] = useState();
 
   const handleLogout = () => {
@@ -20,7 +19,11 @@ const App = () => {
     <ApolloProvider client={apolloClient}>
       <TabsProvider activeTab={activeTab} setActiveTab={setActiveTab}>
         <NavBar user={user} onLogout={handleLogout} onLogin={setUser} />
-        {user && <Home />}
+        {user ? (
+          <Home />
+        ) : (
+          <div className="bg-[url(../public/harley-logo.png)] bg-center bg-no-repeat bg-contain h-[500px] mt-20" />
+        )}
       </TabsProvider>
     </ApolloProvider>
   );
