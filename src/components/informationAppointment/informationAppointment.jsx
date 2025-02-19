@@ -5,6 +5,7 @@ import "./styles.css";
 import CustomTimePicker from "./timePicker";
 import PhoneInput from "./phoneInput";
 import CalendarIcon from "../../img/calendar";
+import { useGetUserByEmail } from "../../hooks/useGetUser";
 
 const CalendarComponent = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -13,23 +14,35 @@ const CalendarComponent = () => {
   );
 };
 
-const InformationCard = ({title, description, image }) => {
+const InformationCard = ({title, description, image, content }) => {
   return (
   <>
     <h3 className="text-lg font-medium text-gray-800">{title}</h3>
-    <p className="text-gray-600 font-normal">
-      {description}
-    </p>
+    {description &&
+      <p className="text-gray-600 font-normal">
+        {description}
+      </p>
+    }
+    { content && content }
     { image && <img src={image} alt={image} className="w-30 h-20"/>}
   </>
 
   )
 }
 
-const InformationAppointment = ({ user }) => {
+const renderErrors = (errors) => {
+  if (!errors)
+    return null;
+  return errors.map((error) => <p className="text-gray-600 font-normal"><strong>{`${error.code} (${error.severity}):`}</strong>{error.fault}</p>);
+}
+
+const InformationAppointment = () => {
+  const { user } = useGetUserByEmail();
+  console.log('User:', user)
   return (
     <div className="px-4">
       <InformationCard title="Diagnosis" description={user?.appointments?.[0]?.diagnosis} />
+      <InformationCard title="Error" content={renderErrors(user?.appointments?.[0]?.errors)} className="mt-1"/>
       <div className="pt-5 grid grid-cols-4 gap-4">
         <div>
           <InformationCard title="Motorcycle" image={user?.motorcycle?.image} />
