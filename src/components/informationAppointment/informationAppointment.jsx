@@ -28,7 +28,7 @@ const convertToLocalDate = (utcValue) => {
   return new Date(utcValue);
 };
 
-const CalendarComponent = ({value, setDetails }) => {
+const CalendarComponent = ({ value, setDetails }) => {
   const [selectedDealership] = useContext(SelectedRadio);
   const [disabledDates, setDisabledDate] = useState([]);
   const [startDate, setStartDate] = useState(null);
@@ -169,25 +169,40 @@ const InformationAppointment = ({ user, hasErrors, errors }) => {
       <div className="grid grid-cols-4 gap-4 pt-6">
         <div>
           <InformationCard title="Date" />
-          <CalendarComponent setDetails={setDetails} value={user?.appointments?.[0]?.date} />
+          <CalendarComponent
+            data-testid="calendar"
+            setDetails={setDetails}
+            value={user?.appointments?.[0]?.date}
+          />
         </div>
         <div className="w-[10rem]">
           <InformationCard title="Time" />
-          <CustomTimePicker setDetails={setDetails} value={user?.appointments?.[0]?.time} />
+          <CustomTimePicker
+            data-testid="time-picker"
+            setDetails={setDetails}
+            value={user?.appointments?.[0]?.time}
+          />
         </div>
         <div className="text-lg font-medium text-gray-800">
           <InformationCard title="Phone" />
-          <PhoneInput value={user?.appointments?.[0]?.phone || user?.phone} setDetails={setDetails} />
+          <PhoneInput
+            value={user?.appointments?.[0]?.phone || user?.phone}
+            setDetails={setDetails}
+          />
         </div>
         <div>
-          <InformationCard title="Status" description={user?.appointments?.[0]?.status} />
+          <InformationCard
+            title="Status"
+            description={user?.appointments?.[0]?.status}
+          />
         </div>
       </div>
       <Button
         variant="text"
-        disabled={loading || user?.appointments?.[0]?.status !== 'Scheduled'}
-        onClick={() => deleteAppointment()}>
-          Cancel Appointment
+        disabled={loading || user?.appointments?.[0]?.status !== "Scheduled"}
+        onClick={() => deleteAppointment()}
+      >
+        Cancel Appointment
       </Button>
     </div>
   );

@@ -1,16 +1,16 @@
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import { login } from '../../lib/auth';
-import { Fragment, useState } from 'react';
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { login } from "../../lib/auth";
+import { Fragment, useState } from "react";
 
 export default function LoginDialog({ onLogin }) {
   const [open, setOpen] = useState(false);
-  
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -21,7 +21,11 @@ export default function LoginDialog({ onLogin }) {
 
   return (
     <Fragment>
-      <Button variant="text" onClick={handleClickOpen} sx={{ color: '#ffffff' }}>
+      <Button
+        variant="text"
+        onClick={handleClickOpen}
+        sx={{ color: "#ffffff" }}
+      >
         Login
       </Button>
       <Dialog
@@ -29,7 +33,7 @@ export default function LoginDialog({ onLogin }) {
         onClose={handleClose}
         slotProps={{
           paper: {
-            component: 'form',
+            component: "form",
             onSubmit: async (event) => {
               event.preventDefault();
               const formData = new FormData(event.currentTarget);
@@ -48,7 +52,8 @@ export default function LoginDialog({ onLogin }) {
         <DialogTitle>Login</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Login to the Harley-Davidson Notification Center to get updates in real time.
+            Login to the Harley-Davidson Notification Center to get updates in
+            real time.
           </DialogContentText>
           <TextField
             autoFocus
@@ -60,7 +65,8 @@ export default function LoginDialog({ onLogin }) {
             type="email"
             fullWidth
             variant="standard"
-            color='secondary'
+            color="secondary"
+            data-testid="test-email"
           />
           <TextField
             autoFocus
@@ -72,12 +78,21 @@ export default function LoginDialog({ onLogin }) {
             type="password"
             fullWidth
             variant="standard"
-            color='secondary'
+            color="secondary"
+            data-testid="test-password"
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color='secondary'>Cancel</Button>
-          <Button type="submit" color='secondary'>Login</Button>
+          <Button
+            data-testid="btn-cancel"
+            onClick={handleClose}
+            color="secondary"
+          >
+            Cancel
+          </Button>
+          <Button data-testid="btn-login" type="submit" color="secondary">
+            Login
+          </Button>
         </DialogActions>
       </Dialog>
     </Fragment>
