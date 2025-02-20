@@ -30,12 +30,16 @@ const DealershipCard = () => {
             checked={selectedDealership === dealership.id}
             onChange={handleChange}
             className="w-5 h-5 accent-primary_1"
+            data-testid={`rd-dealership-${dealership.id}`}
           />
           <>
             <div className="flex items-center justify-center bg-primary_3/50 text-min font-medium select-none relative h-8 w-8 leading-4 text-[13px] rounded-full">
               {dealership?.name?.charAt(0)}
             </div>
-            <div className="w-[500px]">
+            <div
+              className="w-[500px]"
+              data-testid={`info-dealership-${dealership.id}`}
+            >
               <h2 className="font-medium mb-1">{dealership.name}</h2>
               <p className="font-small">{dealership.direction}</p>
               <p className="font-normal">{`${dealership.phone}, (${dealership.distance})`}</p>

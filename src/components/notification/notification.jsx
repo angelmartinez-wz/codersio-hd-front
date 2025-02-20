@@ -16,6 +16,7 @@ const Notification = () => {
     <div className="fixed top-4 right-4 space-y-4 z-50">
       {errors.map((error, index) => (
         <Alert
+          data-testid={`alert-${index}`}
           key={index}
           type={severity[error.severity]}
           content={`${error.code} - ${error.fault}`}

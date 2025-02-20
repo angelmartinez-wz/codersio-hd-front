@@ -10,7 +10,7 @@ import AlertType from "../alert/alert.types";
 export const primaryButtonStyle =
   "bg-primary_1 hover:bg-primary_2 text-white font-bold py-2 px-4 rounded-full w-40";
 
-  export const primaryButtonStyleDisabled =
+export const primaryButtonStyleDisabled =
   "bg-gray-300 hover:bg-gray-300 text-white font-bold py-2 px-4 rounded-full w-40";
 
 const AppointmentCard = ({ handleClose }) => {
@@ -25,15 +25,20 @@ const AppointmentCard = ({ handleClose }) => {
 
   return (
     <div className="flex justify-center pt-9">
-      {showNotification && 
+      {showNotification && (
         <div className="fixed top-4 right-4 space-y-4 z-50">
-          <Alert key={'alert-appointment-update'} type={AlertType.SUCCESS} content={'Appointment Updated!'} />
+          <Alert
+            key={"alert-appointment-update"}
+            type={AlertType.SUCCESS}
+            content={"Appointment Updated!"}
+          />
         </div>
-      }
+      )}
       <div className="w-[48.5rem] rounded overflow-hidden shadow-lg bg-slate-100">
         <div className="flex py-5 px-6 items-center justify-between">
           <h1 className="font-normal text-2xl">Maintenance Appointment</h1>
           <button
+            data-testid="btn-close"
             className="hover:bg-gray-200 rounded"
             onClick={() => {
               handleClose();
@@ -50,9 +55,15 @@ const AppointmentCard = ({ handleClose }) => {
         <div className="flex px-6 py-6 gap-x-2">
           {activeTab === 1 ? (
             <button
-              className={disabled ? primaryButtonStyleDisabled : primaryButtonStyle}
+              className={
+                disabled ? primaryButtonStyleDisabled : primaryButtonStyle
+              }
               onClick={async () => {
-                await updateAppointment( { date: details?.date, time: details?.time, phone: details?.phone });
+                await updateAppointment({
+                  date: details?.date,
+                  time: details?.time,
+                  phone: details?.phone,
+                });
                 setShowNotification(true);
                 setTimeout(() => {
                   setShowNotification(false);
@@ -61,6 +72,7 @@ const AppointmentCard = ({ handleClose }) => {
                 }, 1000);
               }}
               disabled={disabled || loading}
+              data-testid="btn-save-appointment"
             >
               Save
             </button>
@@ -68,11 +80,13 @@ const AppointmentCard = ({ handleClose }) => {
             <button
               className={primaryButtonStyle}
               onClick={() => setActiveTab(1)}
+              data-testid="btn-next"
             >
               Next
             </button>
           )}
           <button
+            data-testid="btn-cancel"
             onClick={() => {
               handleClose();
               setActiveTab(0);
