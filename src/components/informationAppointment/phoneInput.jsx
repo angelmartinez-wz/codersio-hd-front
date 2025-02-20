@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-const PhoneInput = ({ value }) => {
-  const [phone, setPhone] = useState(value);
+const PhoneInput = ({ value, setDetails }) => {
+  const [phone, setPhone] = useState(value?.replace(/[()\s-]/g, ''));
   const [error, setError] = useState(false);
 
   const formatPhoneNumber = (input) => {
@@ -31,6 +31,10 @@ const PhoneInput = ({ value }) => {
   const handleChange = (e) => {
     const formatted = formatPhoneNumber(e.target.value);
     setPhone(formatted);
+    setDetails((prev) => ({
+      ...prev,
+      phone: formatted,
+    }));
 
     if (validatePhoneNumber(formatted)) {
       setError("");
@@ -41,7 +45,12 @@ const PhoneInput = ({ value }) => {
 
   useEffect(() => {
     if (value !== phone) {
-      setPhone(formatPhoneNumber(value));
+      const formatted = formatPhoneNumber(value);
+      setPhone(formatted);
+      setDetails((prev) => ({
+        ...prev,
+        phone: formatted,
+      }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
