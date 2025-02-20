@@ -4,6 +4,23 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
+const parseTime = (timeString) => {
+  const cleanedTimeString = timeString
+    .trim()
+    .replace(/(AM|PM)/i, "")
+    .trim();
+  let [hours, minutes] = cleanedTimeString.split(":").map(Number);
+  const validMinutes = [0, 15, 30, 45];
+  minutes = validMinutes.reduce((prev, curr) =>
+    Math.abs(curr - minutes) < Math.abs(prev - minutes) ? curr : prev
+  );
+
+  const date = new Date();
+  date.setHours(hours, minutes, 0, 0);
+
+  return date;
+};
+
 const convertUTCToCST = (utcDate) => {
   const date = new Date(utcDate);
   const localTimeOffset = 0;
@@ -13,15 +30,14 @@ const convertUTCToCST = (utcDate) => {
 };
 
 const CustomTimePicker = ({ value, setDetails }) => {
-  const defaultValue = value ? convertUTCToCST(value) : null;
-  const [selectedTime, setSelectedTime] = useState(defaultValue);
+  const [selectedTime, setSelectedTime] = useState(null);
   const [error, setError] = useState(false);
   const [disabledTimes, setDisabledTimes] = useState([]);
 
   const minTime = new Date();
-  minTime.setHours(9, 0, 0);
+  minTime.setHours(9, 0, 0, 0);
   const maxTime = new Date();
-  maxTime.setHours(17, 31, 0);
+  maxTime.setHours(17, 31, 0, 0);
 
   const getAvailableHours = () => {
     return Array.from({ length: 9 }, (_, i) => i + 9);
@@ -37,6 +53,10 @@ const CustomTimePicker = ({ value, setDetails }) => {
     setDisabledTimes(getRandomDisabledHours());
   }, []);
 
+  useEffect(() => {
+    setSelectedTime(parseTime(value));
+  }, [value]);
+
   const generateRandomTime = () => {
     let randomTime;
     do {
@@ -51,17 +71,21 @@ const CustomTimePicker = ({ value, setDetails }) => {
   };
 
   useState(() => {
-    if (!defaultValue) {
+    if (!value) {
       setSelectedTime(generateRandomTime());
     }
   }, [disabledTimes]);
 
   const handleTime = (newValue) => {
-    if (newValue && newValue >= minTime && newValue <= maxTime) {
+    if (
+      newValue instanceof Date &&
+      newValue >= minTime &&
+      newValue <= maxTime
+    ) {
       setSelectedTime(newValue);
       setDetails((prev) => ({
         ...prev,
-        time: newValue,
+        time: convertUTCToCST(newValue),
       }));
       setError(false);
     } else {
@@ -75,12 +99,11 @@ const CustomTimePicker = ({ value, setDetails }) => {
         <TimePicker
           value={selectedTime}
           onChange={handleTime}
-          ampm
-          minutesStep={30}
+          ampm={false}
           minTime={minTime}
           maxTime={maxTime}
           views={["hours", "minutes"]}
-          timeSteps={{ hours: 1, minutes: 30 }}
+          timeSteps={{ hours: 1, minutes: 15 }}
           TextField={{
             variant: "outlined",
           }}
