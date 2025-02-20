@@ -5,6 +5,8 @@ import "./styles.css";
 import CustomTimePicker from "./timePicker";
 import PhoneInput from "./phoneInput";
 import { SelectedRadio } from "../../contexts/contexts";
+import { Button } from "@mui/material";
+import { useDeleteMutation } from "../../hooks/useDeleteAppointment";
 
 const getRandomDisabledDate = (start) => {
   const count = 9;
@@ -21,7 +23,12 @@ const getRandomDisabledDate = (start) => {
   return Array.from(dates).map((date) => new Date(date));
 };
 
-const CalendarComponent = () => {
+const convertToLocalDate = (utcValue) => {
+  if (!utcValue) return null;
+  return new Date(utcValue);
+};
+
+const CalendarComponent = ({value, setDetails }) => {
   const [selectedDealership] = useContext(SelectedRadio);
   const [disabledDates, setDisabledDate] = useState([]);
   const [startDate, setStartDate] = useState(null);
@@ -42,7 +49,12 @@ const CalendarComponent = () => {
       }
       return date;
     };
-    setStartDate(getFirstAvailable());
+    if (!value) {
+      setStartDate(getFirstAvailable());
+    } else {
+      const localDate = convertToLocalDate(value);
+      setStartDate(localDate);
+    }
   }, [selectedDealership]);
 
   const isDisabled = (date) => {
@@ -57,7 +69,13 @@ const CalendarComponent = () => {
     <DatePicker
       showIcon
       selected={startDate}
-      onChange={(date) => setStartDate(date)}
+      onChange={(date) => {
+        setStartDate(date);
+        setDetails((prev) => ({
+          ...prev,
+          date,
+        }));
+      }}
       filterDates={(date) => !isDisabled(date)}
       excludeDates={disabledDates}
       minDate={today}
@@ -90,12 +108,11 @@ const renderErrors = (errors) => {
   ));
 };
 
-const InformationAppointment = ({ user }) => {
-  const errors = user?.appointments?.[0]?.errors;
-  const hasErrors = errors?.length;
+const InformationAppointment = ({ user, hasErrors, errors, setDetails }) => {
   const lowErrors = filterErrors(errors, "Low");
   const mediumErrors = filterErrors(errors, "Medium");
   const highErrors = filterErrors(errors, "High");
+  const { deleteAppointment, loading } = useDeleteMutation();
 
   return (
     <div className="px-4">
@@ -148,20 +165,29 @@ const InformationAppointment = ({ user }) => {
           <InformationCard title="Membership" description={user?.membership} />
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-4 pt-6">
+      <div className="grid grid-cols-4 gap-4 pt-6">
         <div>
           <InformationCard title="Date" />
-          <CalendarComponent />
+          <CalendarComponent setDetails={setDetails} value={user?.appointments?.[0]?.date} />
         </div>
         <div className="w-[10rem]">
           <InformationCard title="Time" />
-          <CustomTimePicker />
+          <CustomTimePicker setDetails={setDetails} value={user?.appointments?.[0]?.time} />
         </div>
         <div className="text-lg font-medium text-gray-800">
           <InformationCard title="Phone" />
-          <PhoneInput value={user?.phone} />
+          <PhoneInput value={user?.appointments?.[0]?.phone || user?.phone} setDetails={setDetails} />
+        </div>
+        <div>
+          <InformationCard title="Status" description={user?.appointments?.[0]?.status} />
         </div>
       </div>
+      <Button
+        variant="text"
+        disabled={loading || user?.appointments?.[0]?.status !== 'Scheduled'}
+        onClick={() => deleteAppointment()}>
+          Cancel Appointment
+      </Button>
     </div>
   );
 };

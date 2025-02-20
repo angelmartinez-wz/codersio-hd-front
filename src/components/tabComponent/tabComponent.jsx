@@ -4,7 +4,7 @@ import InformationAppointment from "../informationAppointment/informationAppoint
 import { TabsContext, UserContext } from "../../contexts/contexts";
 import cn from "classnames";
 
-const TabComponent = () => {
+const TabComponent = ({ errors, hasErrors, setDetails }) => {
   const [user] = useContext(UserContext);
   const [activeTab, setActiveTab] = useContext(TabsContext);
 
@@ -13,11 +13,11 @@ const TabComponent = () => {
       id: 0,
       label: "Dealership",
       content: <DealershipCard />,
-    },
+    },  
     {
       id: 1,
       label: "Information",
-      content: <InformationAppointment user={user} />,
+      content: <InformationAppointment user={user} errors={errors} hasErrors={hasErrors} setDetails={setDetails} />,
     },
   ];
 

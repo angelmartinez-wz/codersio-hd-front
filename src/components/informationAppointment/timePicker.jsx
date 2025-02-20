@@ -4,8 +4,17 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
-const CustomTimePicker = () => {
-  const [selectedTime, setSelectedTime] = useState(null);
+const convertUTCToCST = (utcDate) => {
+  const date = new Date(utcDate);
+  const localTimeOffset = 0;
+  const hoursOffset = localTimeOffset * 60;
+  const adjustedDate = new Date(date.getTime() + hoursOffset * 60000);
+  return adjustedDate;
+};
+
+const CustomTimePicker = ({ value, setDetails }) => {
+  const defaultValue = value ? convertUTCToCST(value) : null;
+  const [selectedTime, setSelectedTime] = useState(defaultValue);
   const [error, setError] = useState(false);
   const [disabledTimes, setDisabledTimes] = useState([]);
 
@@ -42,12 +51,18 @@ const CustomTimePicker = () => {
   };
 
   useState(() => {
-    setSelectedTime(generateRandomTime());
+    if (!defaultValue) {
+      setSelectedTime(generateRandomTime());
+    }
   }, [disabledTimes]);
 
   const handleTime = (newValue) => {
     if (newValue && newValue >= minTime && newValue <= maxTime) {
       setSelectedTime(newValue);
+      setDetails((prev) => ({
+        ...prev,
+        time: newValue,
+      }));
       setError(false);
     } else {
       setError(true);

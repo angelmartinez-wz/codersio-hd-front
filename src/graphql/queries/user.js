@@ -21,6 +21,7 @@ export const getUserQuery = gql`
         diagnosis
         date
         time
+        phone
         status
         errors {
           id
@@ -64,6 +65,7 @@ export const getUserByEmailQuery = gql`
         date
         time
         status
+        phone
         errors {
           id
           code

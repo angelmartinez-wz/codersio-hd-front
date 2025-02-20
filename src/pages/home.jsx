@@ -26,7 +26,7 @@ const Home = () => {
         <div className="bg-[url(../public/hd-map.png)] bg-center bg-no-repeat bg-cover h-screen">
           <Notification />
 
-          {showAppointment && <AppointmentCard handleClose={handleClose} />}
+      {showAppointment && <AppointmentCard handleClose={handleClose} />}
 
           <button
             onClick={() => setShowAppointment(true)}
