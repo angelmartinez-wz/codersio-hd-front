@@ -21,12 +21,11 @@ const parseTime = (timeString) => {
   return date;
 };
 
-const convertUTCToCST = (utcDate) => {
-  const date = new Date(utcDate);
-  const localTimeOffset = 0;
-  const hoursOffset = localTimeOffset * 60;
-  const adjustedDate = new Date(date.getTime() + hoursOffset * 60000);
-  return adjustedDate;
+const extractTime = (date) => {
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+
+  return `${hours}:${minutes}`;
 };
 
 const CustomTimePicker = ({ value, setDetails }) => {
@@ -37,7 +36,7 @@ const CustomTimePicker = ({ value, setDetails }) => {
   const minTime = new Date();
   minTime.setHours(9, 0, 0, 0);
   const maxTime = new Date();
-  maxTime.setHours(17, 31, 0, 0);
+  maxTime.setHours(17, 46, 0, 0);
 
   const getAvailableHours = () => {
     return Array.from({ length: 9 }, (_, i) => i + 9);
@@ -82,10 +81,11 @@ const CustomTimePicker = ({ value, setDetails }) => {
       newValue >= minTime &&
       newValue <= maxTime
     ) {
+      const date = extractTime(newValue);
       setSelectedTime(newValue);
       setDetails((prev) => ({
         ...prev,
-        time: convertUTCToCST(newValue),
+        time: date,
       }));
       setError(false);
     } else {
