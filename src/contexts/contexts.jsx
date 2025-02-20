@@ -1,13 +1,15 @@
-import { createContext, useEffect, useMemo, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const TabsContext = createContext(null);
 export const UserContext = createContext(null);
 export const SelectedRadio = createContext(null);
+export const DetailsContext = createContext(null);
 
 const Providers = ({ children }) => {
   const [activeTab, setActiveTab] = useState(0);
   const [selectedDealership, setSelectedDealership] = useState(null);
   const [user, setUser] = useState(null);
+  const [details, setDetails] = useState({});
 
   //const valueRadio = useMemo(() => {selectedDealership, setSelectedDealership}), [selectedDealership];
   useEffect(() => {
@@ -22,7 +24,11 @@ const Providers = ({ children }) => {
         <SelectedRadio.Provider
           value={[selectedDealership, setSelectedDealership]}
         >
-          {children}
+          <DetailsContext.Provider
+            value={[details, setDetails]}
+          >
+            {children}  
+          </DetailsContext.Provider>
         </SelectedRadio.Provider>
       </TabsContext.Provider>
     </UserContext.Provider>

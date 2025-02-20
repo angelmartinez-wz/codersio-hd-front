@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./styles.css";
 import CustomTimePicker from "./timePicker";
 import PhoneInput from "./phoneInput";
-import { SelectedRadio } from "../../contexts/contexts";
+import { DetailsContext, SelectedRadio } from "../../contexts/contexts";
 import { Button } from "@mui/material";
 import { useDeleteMutation } from "../../hooks/useDeleteAppointment";
 
@@ -108,11 +108,12 @@ const renderErrors = (errors) => {
   ));
 };
 
-const InformationAppointment = ({ user, hasErrors, errors, setDetails }) => {
+const InformationAppointment = ({ user, hasErrors, errors }) => {
   const lowErrors = filterErrors(errors, "Low");
   const mediumErrors = filterErrors(errors, "Medium");
   const highErrors = filterErrors(errors, "High");
   const { deleteAppointment, loading } = useDeleteMutation();
+  const [_, setDetails] = useContext(DetailsContext);
 
   return (
     <div className="px-4">

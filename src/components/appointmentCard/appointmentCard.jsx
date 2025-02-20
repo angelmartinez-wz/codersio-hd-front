@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import Close from "../../img/close";
 import TabComponent from "../tabComponent/tabComponent";
-import { TabsContext } from "../../contexts/contexts";
+import { DetailsContext, TabsContext } from "../../contexts/contexts";
 import { useGetUserByEmail } from "../../hooks/useGetUser";
 import { useUpdateMutation } from "../../hooks/useUpdateAppointment";
 import Alert from "../alert/alert";
@@ -15,7 +15,7 @@ export const primaryButtonStyle =
 
 const AppointmentCard = ({ handleClose }) => {
   const { userData } = useGetUserByEmail();
-  const [details, setDetails] = useState({});
+  const [details] = useContext(DetailsContext);
   const [showNotification, setShowNotification] = useState(false);
   const errors = userData?.appointments?.[0]?.errors;
   const hasErrors = !!errors?.length;
@@ -44,7 +44,7 @@ const AppointmentCard = ({ handleClose }) => {
           </button>
         </div>
         <div className="border-b-2 border-gray-300 w-full min-h-[25rem] max-h-[40rem]">
-          <TabComponent errors={errors} hasErrors={hasErrors} setDetails={setDetails} />
+          <TabComponent errors={errors} hasErrors={hasErrors} />
         </div>
 
         <div className="flex px-6 py-6 gap-x-2">
