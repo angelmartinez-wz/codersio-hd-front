@@ -11,7 +11,6 @@ test.describe('Notification Center', () => {
         loginPage = new LoginPage(page)
         notificationCenterPage = new NotificationCenterPage(page, request)
         await notificationCenterPage.generateToken()
-        // await notificationCenterPage.deleteErrors()
     })
 
     test('Schedule an appointment in Notification Center', async ({page, request}) => {
