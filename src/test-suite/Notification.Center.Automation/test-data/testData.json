@@ -1,0 +1,7 @@
+{
+  "email": "angel@hd.com",
+  "password": "angel123",
+  "webUrl": "http://localhost:3000",
+  "apiUrl": "http://localhost:9000/graphql",
+  "generateTokenUrl": "http://localhost:9000/login"
+}
